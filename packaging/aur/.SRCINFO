@@ -1,6 +1,6 @@
 pkgbase = aura-weather
 	pkgdesc = A fluid liquid-glass weather app for Linux, built with Qt Quick and PySide6
-	pkgver = 1.0.1
+	pkgver = 1.0.2
 	pkgrel = 1
 	url = https://github.com/falsecloud/aura
 	arch = any
@@ -11,7 +11,7 @@ pkgbase = aura-weather
 	depends = qt6-multimedia
 	depends = qt6-multimedia-ffmpeg
 	depends = qt6-wayland
-	source = aura-weather-1.0.1.tar.gz::https://github.com/falsecloud/aura/archive/refs/tags/v1.0.1.tar.gz
-	sha256sums = 01068bd1b8d02a683b5caa8224fc81f272cadc51fa03f5f98e318074c9028118
+	source = aura-weather-1.0.2.tar.gz::https://github.com/falsecloud/aura/archive/refs/tags/v1.0.2.tar.gz
+	sha256sums = 6bd8747266b1296dfdd2f14c19a16d982b13975238c5c4dc84633a3042764c62
 
 pkgname = aura-weather

@@ -1,6 +1,6 @@
 # Maintainer: Aura maintainers <319977598+falsecloud@users.noreply.github.com>
 pkgname=aura-weather
-pkgver=1.0.1
+pkgver=1.0.2
 pkgrel=1
 pkgdesc="A fluid liquid-glass weather app for Linux, built with Qt Quick and PySide6"
 arch=('any')
@@ -15,7 +15,7 @@ depends=(
   'qt6-wayland'
 )
 source=("$pkgname-$pkgver.tar.gz::https://github.com/falsecloud/aura/archive/refs/tags/v$pkgver.tar.gz")
-sha256sums=('01068bd1b8d02a683b5caa8224fc81f272cadc51fa03f5f98e318074c9028118')
+sha256sums=('6bd8747266b1296dfdd2f14c19a16d982b13975238c5c4dc84633a3042764c62')
 
 package() {
   local src="$srcdir/aura-$pkgver"
