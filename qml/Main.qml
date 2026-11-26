@@ -103,7 +103,6 @@ Window {
                     source: win.videoKey ? backend.asset("media/sharp-" + win.videoKey + ".webp") : ""
                     fillMode: Image.PreserveAspectCrop
                     playing: player.playbackState === MediaPlayer.PlayingState
-                    loops: AnimatedImage.Infinite
                     cache: false
                     smooth: true
                     layer.enabled: true
