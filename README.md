@@ -99,9 +99,9 @@ source, then install it like any other package:
 
 ```bash
 sudo install -d -m 0755 /etc/apt/keyrings
-curl -fsSL https://falsecloud.github.io/aura/aura-archive-keyring.gpg \
+curl -fsSL https://github.com/falsecloud/aura/releases/latest/download/aura-archive-keyring.gpg \
   | sudo tee /etc/apt/keyrings/aura.gpg >/dev/null
-echo "deb [signed-by=/etc/apt/keyrings/aura.gpg] https://falsecloud.github.io/aura stable main" \
+echo "deb [signed-by=/etc/apt/keyrings/aura.gpg] https://github.com/falsecloud/aura/releases/latest/download/ ./" \
   | sudo tee /etc/apt/sources.list.d/aura.list
 sudo apt update
 sudo apt install aura-weather

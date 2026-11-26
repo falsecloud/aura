@@ -15,17 +15,11 @@ permissions:
 
 jobs:
   publish:
-    name: Build and publish APT repository
+    name: Publish signed APT metadata
     runs-on: ubuntu-22.04
     steps:
       - name: Check out source
         uses: actions/checkout@v4
-
-      - name: Check out APT pages
-        uses: actions/checkout@v4
-        with:
-          ref: gh-pages
-          path: apt-pages
 
       - name: Install repository tools
         run: |
@@ -43,27 +37,22 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ inputs.tag || github.event.release.tag_name }}
         run: |
-          mkdir -p debs
+          mkdir -p repo
           gh release download "$TAG" \
             --repo "$GITHUB_REPOSITORY" \
             --pattern '*.deb' \
-            --dir debs
+            --dir repo
 
-      - name: Build signed repository
+      - name: Build signed flat repository
         run: |
           set -euo pipefail
-          cd apt-pages
+          cd repo
 
-          rm -rf pool/main/a/aura-weather
-          mkdir -p pool/main/a/aura-weather dists/stable/main/binary-amd64
-          cp ../debs/*.deb pool/main/a/aura-weather/
+          dpkg-scanpackages --multiversion . /dev/null > Packages
+          sed -i 's|^Filename: \./|Filename: |' Packages
+          gzip -9c Packages > Packages.gz
 
-          dpkg-scanpackages --multiversion pool \
-            > dists/stable/main/binary-amd64/Packages
-          gzip -9c dists/stable/main/binary-amd64/Packages \
-            > dists/stable/main/binary-amd64/Packages.gz
-
-          rm -f dists/stable/Release dists/stable/InRelease dists/stable/Release.gpg
+          rm -f Release InRelease Release.gpg
           apt-ftparchive \
             -o APT::FTPArchive::Release::Origin="Aura" \
             -o APT::FTPArchive::Release::Label="Aura" \
@@ -71,27 +60,23 @@ jobs:
             -o APT::FTPArchive::Release::Codename="stable" \
             -o APT::FTPArchive::Release::Architectures="amd64" \
             -o APT::FTPArchive::Release::Components="main" \
-            release dists/stable > dists/stable/Release
+            release . > Release
 
           FPR="$(gpg --list-secret-keys --with-colons | awk -F: '/^fpr:/{print $10; exit}')"
           test -n "$FPR"
           gpg --batch --yes --local-user "$FPR" \
-            --clearsign -o dists/stable/InRelease dists/stable/Release
+            --clearsign -o InRelease Release
           gpg --batch --yes --local-user "$FPR" \
-            --armor --detach-sign -o dists/stable/Release.gpg dists/stable/Release
+            --armor --detach-sign -o Release.gpg Release
 
-          cp ../packaging/apt/aura-archive-keyring.gpg .
-
-      - name: Commit repository changes
+      - name: Upload APT metadata to release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ inputs.tag || github.event.release.tag_name }}
         run: |
-          set -euo pipefail
-          cd apt-pages
-          git config user.name "Aura Release Bot"
-          git config user.email "319977598+falsecloud@users.noreply.github.com"
-          git add -A
-          if git diff --cached --quiet; then
-            echo "APT repository is already up to date."
-            exit 0
-          fi
-          git commit -m "Update APT repository for ${{ inputs.tag || github.event.release.tag_name }}"
-          git push origin gh-pages
+          cd repo
+          cp ../packaging/apt/aura-archive-keyring.gpg .
+          gh release upload "$TAG" \
+            --repo "$GITHUB_REPOSITORY" \
+            --clobber \
+            Packages Packages.gz Release InRelease Release.gpg aura-archive-keyring.gpg
