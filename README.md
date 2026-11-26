@@ -62,6 +62,18 @@ the whole app works without an API key.
 
 ## Installation
 
+### One-line install
+
+On Debian, Ubuntu, Linux Mint, Pop!_OS, Arch, Manjaro, or EndeavourOS:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/falsecloud/aura/main/install.sh | sudo bash
+```
+
+The installer detects the distribution, adds the signed APT repository on
+Debian-family systems, or downloads and installs the release package with
+pacman on Arch-family systems.
+
 ### Releases
 
 Every tagged release is built by GitHub Actions and published on the
