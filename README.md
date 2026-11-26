@@ -174,9 +174,9 @@ adjacent `_internal` directory for Qt, QML, media, and its Python runtime.
 
 ### From source
 
-Aura needs **Python 3.10+**, **PySide6 6.8+**, and a working **Vulkan** driver.
-The glass shader is a real `ShaderEffect`; the app defaults to Qt's Vulkan RHI
-backend instead of OpenGL.
+Aura needs **Python 3.10+**, **PySide6 6.8+**, and a working graphics driver.
+The glass shader is a real `ShaderEffect`; Aura prefers Qt's Vulkan RHI backend
+and automatically falls back to OpenGL when no Vulkan GPU is available.
 
 Arch Linux:
 
@@ -200,7 +200,7 @@ pip install -r requirements.txt
 ./run.sh
 ```
 
-Other distributions: install Python, a Vulkan driver, the Qt 6
+Other distributions: install Python, a graphics driver, the Qt 6
 Multimedia/QML runtime, and the XCB cursor library, then use the same venv
 commands.
 
@@ -290,11 +290,16 @@ assets, writes `SHA256SUMS`, and publishes the GitHub Release. A manual
 
 ## Troubleshooting
 
-**The window is black or the glass panels are missing.** Aura defaults to the
-Vulkan Qt Quick backend because the refraction shader needs it. Install your
+**The window is black or the glass panels are missing.** Aura prefers the
+Vulkan Qt Quick backend for the refraction shader and falls back to OpenGL
+when no Vulkan GPU is available. For the best glass quality, install your
 GPU's Vulkan driver (`mesa-vulkan-drivers` on Debian/Ubuntu, `vulkan-radeon`
-or `vulkan-intel` on Arch, or the proprietary NVIDIA driver). Confirm Vulkan
-works with `vulkaninfo`.
+or `vulkan-intel` on Arch, or the proprietary NVIDIA driver) and confirm it
+with `vulkaninfo`. To use OpenGL explicitly:
+
+```bash
+QSG_RHI_BACKEND=opengl aura
+```
 
 **The AppImage will not start because of FUSE.**
 

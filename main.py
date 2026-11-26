@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import ctypes
 import os
 import sys
 
@@ -13,9 +14,97 @@ from PySide6.QtQml import QQmlApplicationEngine
 
 from backend import BASE, Backend
 
-# Qt Quick's OpenGL path in this environment cannot render ShaderEffect nodes.
-# Liquid glass is a real refraction shader, so render through Vulkan instead.
-os.environ.setdefault("QSG_RHI_BACKEND", "vulkan")
+
+def _has_vulkan_device() -> bool:
+    """Check for a usable Vulkan GPU before Qt tries to initialize Vulkan."""
+
+    class VkApplicationInfo(ctypes.Structure):
+        _fields_ = [
+            ("sType", ctypes.c_int),
+            ("pNext", ctypes.c_void_p),
+            ("pApplicationName", ctypes.c_char_p),
+            ("applicationVersion", ctypes.c_uint32),
+            ("pEngineName", ctypes.c_char_p),
+            ("engineVersion", ctypes.c_uint32),
+            ("apiVersion", ctypes.c_uint32),
+        ]
+
+    class VkInstanceCreateInfo(ctypes.Structure):
+        _fields_ = [
+            ("sType", ctypes.c_int),
+            ("pNext", ctypes.c_void_p),
+            ("flags", ctypes.c_uint32),
+            ("pApplicationInfo", ctypes.POINTER(VkApplicationInfo)),
+            ("enabledLayerCount", ctypes.c_uint32),
+            ("ppEnabledLayerNames", ctypes.c_void_p),
+            ("enabledExtensionCount", ctypes.c_uint32),
+            ("ppEnabledExtensionNames", ctypes.c_void_p),
+        ]
+
+    try:
+        loader = ctypes.CDLL("libvulkan.so.1")
+        create_instance = loader.vkCreateInstance
+        create_instance.argtypes = [
+            ctypes.POINTER(VkInstanceCreateInfo),
+            ctypes.c_void_p,
+            ctypes.POINTER(ctypes.c_void_p),
+        ]
+        create_instance.restype = ctypes.c_int
+        enumerate_devices = loader.vkEnumeratePhysicalDevices
+        enumerate_devices.argtypes = [
+            ctypes.c_void_p,
+            ctypes.POINTER(ctypes.c_uint32),
+            ctypes.c_void_p,
+        ]
+        enumerate_devices.restype = ctypes.c_int
+        destroy_instance = loader.vkDestroyInstance
+        destroy_instance.argtypes = [ctypes.c_void_p, ctypes.c_void_p]
+    except (OSError, AttributeError):
+        return False
+
+    application_info = VkApplicationInfo(
+        sType=0,
+        pNext=None,
+        pApplicationName=b"Aura",
+        applicationVersion=1,
+        pEngineName=b"Aura",
+        engineVersion=1,
+        apiVersion=1 << 22,
+    )
+    create_info = VkInstanceCreateInfo(
+        sType=1,
+        pNext=None,
+        flags=0,
+        pApplicationInfo=ctypes.pointer(application_info),
+        enabledLayerCount=0,
+        ppEnabledLayerNames=None,
+        enabledExtensionCount=0,
+        ppEnabledExtensionNames=None,
+    )
+    instance = ctypes.c_void_p()
+    try:
+        if create_instance(ctypes.byref(create_info), None, ctypes.byref(instance)) != 0:
+            return False
+        try:
+            count = ctypes.c_uint32()
+            if enumerate_devices(instance, ctypes.byref(count), None) != 0:
+                return False
+            return count.value > 0
+        finally:
+            destroy_instance(instance, None)
+    except Exception:
+        return False
+
+
+# Liquid glass is a real refraction shader, so prefer Vulkan. VMs and machines
+# without a Vulkan GPU would abort inside Qt if Vulkan were forced, so fall back
+# to OpenGL when no physical Vulkan device is present.
+if "QSG_RHI_BACKEND" not in os.environ:
+    if _has_vulkan_device():
+        os.environ["QSG_RHI_BACKEND"] = "vulkan"
+    else:
+        os.environ["QSG_RHI_BACKEND"] = "opengl"
+        print("Aura: no Vulkan GPU detected; using the OpenGL backend.", file=sys.stderr)
 
 
 # PyInstaller puts bundled QML modules under the frozen _internal directory.
