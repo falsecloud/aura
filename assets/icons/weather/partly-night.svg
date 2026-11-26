@@ -1,0 +1,94 @@
+<svg class="wi " viewBox="0 0 96 96" role="img" aria-label="Partly cloudy"><defs>
+      <radialGradient id="sun-w4" cx="36%" cy="30%" r="72%">
+        <stop offset="0%" stop-color="#fffef4"/>
+        <stop offset="26%" stop-color="#fff7cc"/>
+        <stop offset="60%" stop-color="#ffd45e"/>
+        <stop offset="100%" stop-color="#eea127"/>
+      </radialGradient>
+      <radialGradient id="sunHalo-w4" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#ffeeb0" stop-opacity=".8"/>
+        <stop offset="36%" stop-color="#ffd268" stop-opacity=".3"/>
+        <stop offset="100%" stop-color="#ffc44d" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="cloud-w4" x1="24%" y1="0%" x2="62%" y2="100%">
+        <stop offset="0%" stop-color="#e8eff9"/>
+        <stop offset="36%" stop-color="#cbd8e9"/>
+        <stop offset="68%" stop-color="#9cafc8"/>
+        <stop offset="100%" stop-color="#798ca7"/>
+      </linearGradient>
+      <linearGradient id="cloudBack-w4" x1="0%" y1="0%" x2="45%" y2="100%">
+        <stop offset="0%" stop-color="#a9b9cf"/>
+        <stop offset="100%" stop-color="#667892"/>
+      </linearGradient>
+      <radialGradient id="moon-w4" cx="34%" cy="28%" r="76%">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="45%" stop-color="#f7f9ff"/>
+        <stop offset="82%" stop-color="#d8dfef"/>
+        <stop offset="100%" stop-color="#b8c1d8"/>
+      </radialGradient>
+      <radialGradient id="moonGlow-w4" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#e2e9ff" stop-opacity=".5"/>
+        <stop offset="50%" stop-color="#b6c3ff" stop-opacity=".16"/>
+        <stop offset="100%" stop-color="#a4b4ff" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="rain-w4" gradientUnits="userSpaceOnUse" x1="0" y1="66" x2="0" y2="92">
+        <stop offset="0%" stop-color="#cdefff" stop-opacity="0"/>
+        <stop offset="24%" stop-color="#cdefff" stop-opacity=".95"/>
+        <stop offset="100%" stop-color="#6fb9e6" stop-opacity=".08"/>
+      </linearGradient>
+      <linearGradient id="bolt-w4" x1="0%" y1="0%" x2="30%" y2="100%">
+        <stop offset="0%" stop-color="#fffdf0"/>
+        <stop offset="50%" stop-color="#ffdd72"/>
+        <stop offset="100%" stop-color="#ffb32a"/>
+      </linearGradient>
+      <linearGradient id="fog-w4" gradientUnits="userSpaceOnUse" x1="8" y1="0" x2="88" y2="0">
+        <stop offset="0%" stop-color="#ffffff" stop-opacity="0"/>
+        <stop offset="22%" stop-color="#ffffff" stop-opacity=".78"/>
+        <stop offset="78%" stop-color="#ffffff" stop-opacity=".62"/>
+        <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+      </linearGradient>
+      <clipPath id="cloudClip-w4"><path d="M24 68C17.9 68 13 63.1 13 57C13 51.4 17.2 46.8 22.7 46.1C24.4 33.9 34.8 24.5 47.5 24.5C59.2 24.5 69 32.6 71.7 43.5C77.8 44.8 82.5 50.3 82.5 57C82.5 63.1 77.6 68 71.5 68Z"/></clipPath>
+      <filter id="soft-w4" x="-40%" y="-40%" width="180%" height="180%">
+        <feGaussianBlur stdDeviation="2.6"/>
+      </filter>
+      <filter id="glow-w4" x="-80%" y="-80%" width="260%" height="260%">
+        <feGaussianBlur stdDeviation="2.4" result="b"/>
+        <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs><g class="stars">
+      <circle class="star s1" cx="16" cy="22" r="1.5" fill="#fff"/>
+      <circle class="star s2" cx="29" cy="12" r="1.1" fill="#fff"/>
+      <circle class="star s3" cx="79" cy="20" r="1.3" fill="#fff"/>
+      <circle class="star s4" cx="87" cy="39" r="1" fill="#fff"/>
+      <circle class="star s5" cx="12" cy="45" r="1.1" fill="#fff"/>
+      <circle class="star s6" cx="67" cy="10" r="1.2" fill="#fff"/>
+      <path class="star s3" d="M74 55l1 2.6 2.6 1-2.6 1-1 2.6-1-2.6-2.6-1 2.6-1Z" fill="#fff" opacity=".85"/>
+    </g><circle class="halo" cx="32" cy="28" r="20.7" fill="url(#moonGlow-w4)"/>
+      <circle cx="32" cy="28" r="11.5" fill="url(#moon-w4)"/>
+      <g opacity=".5">
+        <ellipse cx="28.32" cy="24.55" rx="2.99" ry="2.53" fill="#a9b2cb" filter="url(#soft-w4)"/>
+        <ellipse cx="35.45" cy="31.22" rx="2.3000000000000003" ry="1.84" fill="#b3bbd2" opacity=".8" filter="url(#soft-w4)"/>
+        <ellipse cx="31.08" cy="33.519999999999996" rx="1.38" ry="1.035" fill="#b3bbd2" opacity=".7" filter="url(#soft-w4)"/>
+        <ellipse cx="36.83" cy="23.17" rx="1.265" ry="0.92" fill="#c5cce0" opacity=".8" filter="url(#soft-w4)"/>
+      </g>
+      <path d="M 21.65 23.17 A 11.5 11.5 0 0 1 29.93 16.73"
+            fill="none" stroke="#ffffff" stroke-opacity=".38" stroke-width="1"/><g transform="translate(6 12)">
+      <g class="cloud-rear" opacity=".9">
+        <path d="M24 68C17.9 68 13 63.1 13 57C13 51.4 17.2 46.8 22.7 46.1C24.4 33.9 34.8 24.5 47.5 24.5C59.2 24.5 69 32.6 71.7 43.5C77.8 44.8 82.5 50.3 82.5 57C82.5 63.1 77.6 68 71.5 68Z" fill="url(#cloudBack-w4)"
+              transform="translate(48 46) scale(.88) translate(-48 -46)"/>
+      </g>
+    </g><g transform="translate(4 9)" opacity="1">
+      <g class="cloud-group">
+        <g transform="translate(48 46) scale(1) translate(-48 -46)">
+          <path d="M24 68C17.9 68 13 63.1 13 57C13 51.4 17.2 46.8 22.7 46.1C24.4 33.9 34.8 24.5 47.5 24.5C59.2 24.5 69 32.6 71.7 43.5C77.8 44.8 82.5 50.3 82.5 57C82.5 63.1 77.6 68 71.5 68Z" fill="url(#cloud-w4)"/>
+          
+          <g clip-path="url(#cloudClip-w4)">
+            <ellipse cx="36" cy="31" rx="20" ry="9.4" fill="#ffffff" opacity="0.16" transform="rotate(-13 36 31)" filter="url(#soft-w4)"/>
+            <ellipse cx="58" cy="39" rx="11" ry="6" fill="#ffffff" opacity="0.07" filter="url(#soft-w4)"/>
+            <ellipse cx="47" cy="70" rx="34" ry="13" fill="#2c3b53" opacity="0.55" filter="url(#soft-w4)"/>
+            <ellipse cx="19" cy="60" rx="11" ry="11" fill="#4a5c76" opacity=".28" filter="url(#soft-w4)"/>
+          </g>
+          <path d="M24 68C17.9 68 13 63.1 13 57C13 51.4 17.2 46.8 22.7 46.1C24.4 33.9 34.8 24.5 47.5 24.5C59.2 24.5 69 32.6 71.7 43.5C77.8 44.8 82.5 50.3 82.5 57C82.5 63.1 77.6 68 71.5 68Z" fill="none" stroke="#ffffff" stroke-opacity="0.14" stroke-width="0.7"/>
+        </g>
+      </g>
+    </g></svg>

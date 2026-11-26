@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.build-venv/
+.build-tools/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Build output
+build/
+dist/
+release/
+packaging/build/
+packaging/arch/pkg/
+packaging/arch/src/
+*.AppImage
+*.deb
+*.rpm
+*.pkg.tar.*
+*.flatpak
+*.snap
+*.tar.gz
+
+# Local tooling
+.freebuff/
+.tmp/
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Runtime files
+*.log
+core
+core.*

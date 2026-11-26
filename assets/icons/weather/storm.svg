@@ -1,0 +1,89 @@
+<svg class="wi " viewBox="0 0 96 96" role="img" aria-label="Thunderstorm"><defs>
+      <radialGradient id="sun-w11" cx="36%" cy="30%" r="72%">
+        <stop offset="0%" stop-color="#fffef4"/>
+        <stop offset="26%" stop-color="#fff7cc"/>
+        <stop offset="60%" stop-color="#ffd45e"/>
+        <stop offset="100%" stop-color="#eea127"/>
+      </radialGradient>
+      <radialGradient id="sunHalo-w11" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#ffeeb0" stop-opacity=".8"/>
+        <stop offset="36%" stop-color="#ffd268" stop-opacity=".3"/>
+        <stop offset="100%" stop-color="#ffc44d" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="cloud-w11" x1="24%" y1="0%" x2="62%" y2="100%">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="36%" stop-color="#f8fbff"/>
+        <stop offset="68%" stop-color="#dbe8f7"/>
+        <stop offset="100%" stop-color="#b3c8dd"/>
+      </linearGradient>
+      <linearGradient id="cloudBack-w11" x1="0%" y1="0%" x2="45%" y2="100%">
+        <stop offset="0%" stop-color="#d9e5f3"/>
+        <stop offset="100%" stop-color="#8da2bc"/>
+      </linearGradient>
+      <radialGradient id="moon-w11" cx="34%" cy="28%" r="76%">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="45%" stop-color="#f7f9ff"/>
+        <stop offset="82%" stop-color="#d8dfef"/>
+        <stop offset="100%" stop-color="#b8c1d8"/>
+      </radialGradient>
+      <radialGradient id="moonGlow-w11" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#e2e9ff" stop-opacity=".5"/>
+        <stop offset="50%" stop-color="#b6c3ff" stop-opacity=".16"/>
+        <stop offset="100%" stop-color="#a4b4ff" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="rain-w11" gradientUnits="userSpaceOnUse" x1="0" y1="66" x2="0" y2="92">
+        <stop offset="0%" stop-color="#cdefff" stop-opacity="0"/>
+        <stop offset="24%" stop-color="#cdefff" stop-opacity=".95"/>
+        <stop offset="100%" stop-color="#6fb9e6" stop-opacity=".08"/>
+      </linearGradient>
+      <linearGradient id="bolt-w11" x1="0%" y1="0%" x2="30%" y2="100%">
+        <stop offset="0%" stop-color="#fffdf0"/>
+        <stop offset="50%" stop-color="#ffdd72"/>
+        <stop offset="100%" stop-color="#ffb32a"/>
+      </linearGradient>
+      <linearGradient id="fog-w11" gradientUnits="userSpaceOnUse" x1="8" y1="0" x2="88" y2="0">
+        <stop offset="0%" stop-color="#ffffff" stop-opacity="0"/>
+        <stop offset="22%" stop-color="#ffffff" stop-opacity=".78"/>
+        <stop offset="78%" stop-color="#ffffff" stop-opacity=".62"/>
+        <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+      </linearGradient>
+      <clipPath id="cloudClip-w11"><path d="M24 68C17.9 68 13 63.1 13 57C13 51.4 17.2 46.8 22.7 46.1C24.4 33.9 34.8 24.5 47.5 24.5C59.2 24.5 69 32.6 71.7 43.5C77.8 44.8 82.5 50.3 82.5 57C82.5 63.1 77.6 68 71.5 68Z"/></clipPath>
+      <filter id="soft-w11" x="-40%" y="-40%" width="180%" height="180%">
+        <feGaussianBlur stdDeviation="2.6"/>
+      </filter>
+      <filter id="glow-w11" x="-80%" y="-80%" width="260%" height="260%">
+        <feGaussianBlur stdDeviation="2.4" result="b"/>
+        <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs><g transform="translate(-8 -12)" opacity="0.6">
+      <g class="cloud-group">
+        <g transform="translate(48 46) scale(0.85) translate(-48 -46)">
+          <path d="M24 68C17.9 68 13 63.1 13 57C13 51.4 17.2 46.8 22.7 46.1C24.4 33.9 34.8 24.5 47.5 24.5C59.2 24.5 69 32.6 71.7 43.5C77.8 44.8 82.5 50.3 82.5 57C82.5 63.1 77.6 68 71.5 68Z" fill="url(#cloud-w11)"/>
+          <path d="M24 68C17.9 68 13 63.1 13 57C13 51.4 17.2 46.8 22.7 46.1C24.4 33.9 34.8 24.5 47.5 24.5C59.2 24.5 69 32.6 71.7 43.5C77.8 44.8 82.5 50.3 82.5 57C82.5 63.1 77.6 68 71.5 68Z" fill="#33415a" opacity=".36"/>
+          <g clip-path="url(#cloudClip-w11)">
+            <ellipse cx="36" cy="31" rx="20" ry="9.4" fill="#ffffff" opacity="0.08" transform="rotate(-13 36 31)" filter="url(#soft-w11)"/>
+            <ellipse cx="58" cy="39" rx="11" ry="6" fill="#ffffff" opacity="0.07" filter="url(#soft-w11)"/>
+            <ellipse cx="47" cy="70" rx="34" ry="13" fill="#2c3b53" opacity="0.55" filter="url(#soft-w11)"/>
+            <ellipse cx="19" cy="60" rx="11" ry="11" fill="#4a5c76" opacity=".28" filter="url(#soft-w11)"/>
+          </g>
+          <path d="M24 68C17.9 68 13 63.1 13 57C13 51.4 17.2 46.8 22.7 46.1C24.4 33.9 34.8 24.5 47.5 24.5C59.2 24.5 69 32.6 71.7 43.5C77.8 44.8 82.5 50.3 82.5 57C82.5 63.1 77.6 68 71.5 68Z" fill="none" stroke="#ffffff" stroke-opacity="0.14" stroke-width="0.7"/>
+        </g>
+      </g>
+    </g><g transform="translate(2 -2)" opacity="1">
+      <g class="cloud-group">
+        <g transform="translate(48 46) scale(1) translate(-48 -46)">
+          <path d="M24 68C17.9 68 13 63.1 13 57C13 51.4 17.2 46.8 22.7 46.1C24.4 33.9 34.8 24.5 47.5 24.5C59.2 24.5 69 32.6 71.7 43.5C77.8 44.8 82.5 50.3 82.5 57C82.5 63.1 77.6 68 71.5 68Z" fill="url(#cloud-w11)"/>
+          <path d="M24 68C17.9 68 13 63.1 13 57C13 51.4 17.2 46.8 22.7 46.1C24.4 33.9 34.8 24.5 47.5 24.5C59.2 24.5 69 32.6 71.7 43.5C77.8 44.8 82.5 50.3 82.5 57C82.5 63.1 77.6 68 71.5 68Z" fill="#33415a" opacity=".36"/>
+          <g clip-path="url(#cloudClip-w11)">
+            <ellipse cx="36" cy="31" rx="20" ry="9.4" fill="#ffffff" opacity="0.08" transform="rotate(-13 36 31)" filter="url(#soft-w11)"/>
+            <ellipse cx="58" cy="39" rx="11" ry="6" fill="#ffffff" opacity="0.07" filter="url(#soft-w11)"/>
+            <ellipse cx="47" cy="70" rx="34" ry="13" fill="#2c3b53" opacity="0.55" filter="url(#soft-w11)"/>
+            <ellipse cx="19" cy="60" rx="11" ry="11" fill="#4a5c76" opacity=".28" filter="url(#soft-w11)"/>
+          </g>
+          <path d="M24 68C17.9 68 13 63.1 13 57C13 51.4 17.2 46.8 22.7 46.1C24.4 33.9 34.8 24.5 47.5 24.5C59.2 24.5 69 32.6 71.7 43.5C77.8 44.8 82.5 50.3 82.5 57C82.5 63.1 77.6 68 71.5 68Z" fill="none" stroke="#ffffff" stroke-opacity="0.14" stroke-width="0.7"/>
+        </g>
+      </g>
+    </g><g class="bolt-group" filter="url(#glow-w11)">
+      <path class="bolt" d="M52 62 L38 82 h8.5 l-3.5 11 15-18 h-8.5 l5-13 Z" fill="url(#bolt-w11)"/>
+      <path class="bolt-branch" d="M45 76.5l-7 4M56 72l8 3.5" fill="none" stroke="#ffe9a8" stroke-width="1.4" stroke-linecap="round" opacity=".6"/>
+    </g><g class="rain"><line class="drop d1" x1="25" y1="72" x2="22" y2="84" stroke="url(#rain-w11)" stroke-width="2.5" stroke-linecap="round"/><line class="drop d2" x1="72" y1="72" x2="69" y2="83" stroke="url(#rain-w11)" stroke-width="2" stroke-linecap="round"/></g></svg>

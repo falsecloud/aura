@@ -1,0 +1,2 @@
+#!/bin/sh
+exec /opt/aura-weather/Aura "$@"

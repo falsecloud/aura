@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=Aura
+GenericName=Weather
+Comment=Liquid-glass weather for your desktop
+Exec=aura
+Icon=aura
+Terminal=false
+Categories=Utility;X-Weather;
+Keywords=weather;forecast;temperature;rain;snow;hourly;ten-day;
+StartupNotify=true
+StartupWMClass=aura

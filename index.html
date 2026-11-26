@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Aura — weather, beautifully</title>
+<meta name="description" content="A calm, liquid-glass weather app with hourly detail and a 10-day forecast, automatically centred on where you are." />
+<meta name="theme-color" content="#0a1020" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='14' fill='%23ffd977'/%3E%3Cg stroke='%23ffd977' stroke-width='4' stroke-linecap='round'%3E%3Cpath d='M32 6v6M32 52v6M6 32h6M52 32h6M14 14l4 4M46 46l4 4M50 14l-4 4M18 46l-4 4'/%3E%3C/g%3E%3C/svg%3E" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="sky" aria-hidden="true">
+    <div class="sky-layer" id="skyA"></div>
+    <div class="sky-layer" id="skyB"></div>
+    <div class="sky-media" aria-hidden="true">
+      <video class="sky-video" id="videoA" muted loop playsinline preload="none" disablepictureinpicture webkit-playsinline></video>
+      <video class="sky-video" id="videoB" muted loop playsinline preload="none" disablepictureinpicture webkit-playsinline></video>
+    </div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="veil"></div>
+    <div class="grain"></div>
+  </div>
+
+  <a class="skip" href="#main">Skip to forecast</a>
+
+  <div class="app">
+    <header class="topbar glass">
+      <div class="brand">
+        <svg class="brand-glyph" viewBox="0 0 32 32" aria-hidden="true">
+          <defs>
+            <radialGradient id="brandGrad" cx="32%" cy="24%" r="80%">
+              <stop offset="0%" stop-color="#ffffff" />
+              <stop offset="52%" stop-color="#a8d8ff" />
+              <stop offset="100%" stop-color="#4d7fd8" />
+            </radialGradient>
+          </defs>
+          <circle cx="16" cy="16" r="13" fill="url(#brandGrad)" />
+          <circle cx="16" cy="16" r="13" fill="none" stroke="rgba(255,255,255,.65)" stroke-width=".8" />
+          <ellipse cx="11.5" cy="10" rx="3.4" ry="2.4" fill="rgba(255,255,255,.9)" transform="rotate(-25 11.5 10)" />
+        </svg>
+        <span class="brand-name">Aura</span>
+      </div>
+
+      <div class="search" role="search">
+        <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+          <circle cx="11" cy="11" r="6.5" /><path d="m16 16 4.5 4.5" />
+        </svg>
+        <input id="searchInput" class="search-input" type="search" placeholder="Search a city…" autocomplete="off" spellcheck="false"
+               aria-label="Search for a city" role="combobox" aria-expanded="false" aria-controls="results" aria-autocomplete="list" />
+        <div class="results glass" id="results" role="listbox" aria-label="Matching locations" hidden></div>
+      </div>
+
+      <div class="actions">
+        <button class="icon-btn" id="locateBtn" type="button" title="Use my location" aria-label="Use my location">
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3.2" /><circle cx="12" cy="12" r="7.4" />
+            <path d="M12 2v2.2M12 19.8V22M2 12h2.2M19.8 12H22" />
+          </svg>
+        </button>
+        <div class="units" role="group" aria-label="Temperature units">
+          <button type="button" class="unit-btn is-active" data-unit="c" aria-pressed="true">°C</button>
+          <button type="button" class="unit-btn" data-unit="f" aria-pressed="false">°F</button>
+        </div>
+        <button class="icon-btn" id="refreshBtn" type="button" title="Refresh forecast" aria-label="Refresh forecast">
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 11a8 8 0 1 0-2.6 6.2" /><path d="M20 4.5V11h-6" />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="stage" id="main">
+      <section class="hero glass" id="hero" aria-label="Current conditions"></section>
+
+      <section class="panel hourly glass" id="hourlyPanel" aria-labelledby="hourlyTitle">
+        <div class="panel-head">
+          <h2 id="hourlyTitle">Next 24 hours</h2>
+          <p class="panel-sub" id="hourlySub"></p>
+        </div>
+        <div id="hourlyBody"></div>
+      </section>
+
+      <section class="panel daily glass" id="dailyPanel" aria-labelledby="dailyTitle">
+        <div class="panel-head">
+          <h2 id="dailyTitle">10-day forecast</h2>
+          <p class="panel-sub">Tap a day for the detail</p>
+        </div>
+        <div id="dailyBody"></div>
+      </section>
+
+      <section class="tiles" id="tiles" aria-label="Conditions detail"></section>
+    </main>
+
+    <footer class="footer">
+      <span>Forecast from <a href="https://open-meteo.com" target="_blank" rel="noopener noreferrer">Open-Meteo</a> · Footage from <a href="https://mixkit.co" target="_blank" rel="noopener noreferrer">Mixkit</a></span>
+      <span id="updatedAt"></span>
+    </footer>
+  </div>
+
+  <div class="loader" id="loader" role="status" aria-live="polite">
+    <div class="loader-glass glass">
+      <div class="loader-rings" aria-hidden="true"><span></span><span></span><span></span></div>
+      <p class="loader-title">Finding your sky</p>
+      <p class="loader-sub" id="loaderSub">Detecting your location…</p>
+    </div>
+  </div>
+
+  <div class="toast glass" id="toast" role="status" hidden></div>
+
+  <noscript>
+    <p style="padding:2rem;text-align:center">Aura needs JavaScript to fetch your local forecast.</p>
+  </noscript>
+
+  <script src="icons.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

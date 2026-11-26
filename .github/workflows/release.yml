@@ -1,0 +1,128 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to build (without the leading v)"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build Linux packages
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install packaging tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            dpkg-dev libarchive-tools rpm zstd \
+            libgl1 libegl1 libxkbcommon-x11-0 libxcb-cursor0 \
+            libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-randr0 \
+            libxcb-render-util0 libxcb-shape0 libxcb-xinerama0 \
+            libgstreamer1.0-0 libgstreamer-plugins-base1.0-0 \
+            libpulse0 libasound2
+
+      - name: Resolve version
+        shell: bash
+        run: |
+          if [[ "${GITHUB_REF_TYPE}" == "tag" ]]; then
+            VERSION="${GITHUB_REF_NAME#v}"
+            test "v$(cat VERSION)" = "${GITHUB_REF_NAME}" || {
+              echo "Tag ${GITHUB_REF_NAME} must match v$(cat VERSION) from VERSION"
+              exit 1
+            }
+          else
+            VERSION="${{ inputs.version }}"
+            VERSION="${VERSION:-$(cat VERSION)}"
+          fi
+          echo "VERSION=${VERSION}" >> "$GITHUB_ENV"
+
+      - name: Build Python bundle
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r packaging/requirements-build.txt
+          python -m PyInstaller --clean --noconfirm packaging/aura.spec
+          test -x dist/Aura/Aura
+          test -f dist/Aura/_internal/qml/Main.qml
+
+      - name: Download appimagetool
+        run: |
+          curl -fsSL -o /tmp/appimagetool \
+            https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage
+          chmod +x /tmp/appimagetool
+          echo "APPIMAGETOOL=/tmp/appimagetool" >> "$GITHUB_ENV"
+
+      - name: Build portable tarball and AppImage
+        run: |
+          bash packaging/make-portable.sh
+          bash packaging/make-appimage.sh
+
+      - name: Build deb, rpm, and Arch packages
+        run: |
+          bash packaging/make-deb.sh
+          bash packaging/make-rpm.sh
+          bash packaging/make-arch.sh
+
+      - name: Upload packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-packages
+          path: release/*
+          if-no-files-found: error
+
+  publish:
+    name: Publish GitHub Release
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Download packages
+        uses: actions/download-artifact@v4
+        with:
+          name: linux-packages
+          path: release
+
+      - name: Add checksums
+        run: |
+          cd release
+          sha256sum * > SHA256SUMS
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: release/*
+          generate_release_notes: true
+          body: |
+            ## Aura ${{ github.ref_name }}
+
+            A native Qt Quick weather app with real shader-based liquid glass,
+            animated condition backdrops, and a fluid motion system throughout.
+
+            ### Downloads
+
+            | Format | Use it on | File |
+            | --- | --- | --- |
+            | AppImage | Any modern glibc Linux | `Aura-*-x86_64.AppImage` |
+            | deb | Debian, Ubuntu, Mint, Pop!_OS | `aura-weather_*_amd64.deb` |
+            | rpm | Fedora, RHEL, openSUSE | `aura-weather-*-1.x86_64.rpm` |
+            | pacman | Arch, Manjaro, EndeavourOS | `aura-weather-*-1-x86_64.pkg.tar.zst` |
+            | tarball | Portable/manual install | `Aura-*-x86_64.tar.gz` |
+
+            See the [installation guide](https://github.com/falsecloud/aura#installation)
+            for commands, dependencies, and troubleshooting.
