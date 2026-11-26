@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Aura APT repository</title></head>
+<body style="font-family:system-ui,sans-serif;max-width:44rem;margin:3rem auto;line-height:1.55">
+<h1>Aura APT repository</h1>
+<p>Signed Debian packages for <a href="https://github.com/falsecloud/aura">Aura</a>.
+The repository metadata is served as GitHub Release assets, so the large
+package stays on the release page.</p>
+<pre><code>install -d -m 0755 /etc/apt/keyrings
+curl -fsSL https://github.com/falsecloud/aura/releases/latest/download/aura-archive-keyring.gpg \
+  | tee /etc/apt/keyrings/aura.gpg &gt;/dev/null
+echo "deb [signed-by=/etc/apt/keyrings/aura.gpg] https://github.com/falsecloud/aura/releases/latest/download/ ./" \
+  | tee /etc/apt/sources.list.d/aura.list
+apt update
+apt install aura-weather</code></pre>
+<p>Run the commands above with root privileges. This is a signed third-party
+repository, not Debian's official archive.</p>
+</body>
+</html>
