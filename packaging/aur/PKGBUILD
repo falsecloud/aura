@@ -1,0 +1,44 @@
+# Maintainer: Aura maintainers <319977598+falsecloud@users.noreply.github.com>
+pkgname=aura-weather
+pkgver=1.0.1
+pkgrel=1
+pkgdesc="A fluid liquid-glass weather app for Linux, built with Qt Quick and PySide6"
+arch=('any')
+url="https://github.com/falsecloud/aura"
+license=('MIT')
+depends=(
+  'python'
+  'pyside6'
+  'qt6-declarative'
+  'qt6-multimedia'
+  'qt6-multimedia-ffmpeg'
+  'qt6-wayland'
+)
+source=("$pkgname-$pkgver.tar.gz::https://github.com/falsecloud/aura/archive/refs/tags/v$pkgver.tar.gz")
+sha256sums=('01068bd1b8d02a683b5caa8224fc81f272cadc51fa03f5f98e318074c9028118')
+
+package() {
+  local src="$srcdir/aura-$pkgver"
+
+  install -d "$pkgdir/opt/aura-weather"
+  cp -a "$src/." "$pkgdir/opt/aura-weather/"
+  rm -rf "$pkgdir/opt/aura-weather"/{.github,docs,packaging,scripts}
+
+  install -Dm644 "$src/LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+  install -Dm644 "$src/packaging/aura.desktop" \
+    "$pkgdir/usr/share/applications/aura-weather.desktop"
+
+  local size
+  for size in 16 24 32 48 64 128 256 512; do
+    install -Dm644 \
+      "$src/packaging/icons/hicolor/${size}x${size}/apps/aura.png" \
+      "$pkgdir/usr/share/icons/hicolor/${size}x${size}/apps/aura.png"
+  done
+
+  install -d "$pkgdir/usr/bin"
+  cat > "$pkgdir/usr/bin/aura" <<'EOF'
+#!/bin/sh
+exec python3 /opt/aura-weather/main.py "$@"
+EOF
+  chmod 755 "$pkgdir/usr/bin/aura"
+}

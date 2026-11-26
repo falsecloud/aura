@@ -71,6 +71,7 @@ release assets are self-contained — Python and Qt do not need to be installed.
 | Format | Best for | Asset |
 | --- | --- | --- |
 | **AppImage** | Any modern glibc Linux | `Aura-<version>-x86_64.AppImage` |
+| **APT repo** | Debian, Ubuntu, Linux Mint, Pop!_OS | `apt install aura-weather` |
 | **deb** | Debian, Ubuntu, Linux Mint, Pop!_OS | `aura-weather_<version>_amd64.deb` |
 | **rpm** | Fedora, RHEL, openSUSE | `aura-weather-<version>-1.x86_64.rpm` |
 | **pacman** | Arch, Manjaro, EndeavourOS | `aura-weather-<version>-1-x86_64.pkg.tar.zst` |
@@ -91,16 +92,35 @@ If your system does not have FUSE:
 ./Aura-*-x86_64.AppImage --appimage-extract-and-run
 ```
 
-#### Debian / Ubuntu
+#### Debian / Ubuntu (APT repository)
+
+Aura is available from a signed APT repository. Add the repository key and
+source, then install it like any other package:
 
 ```bash
-sudo apt install ./aura-weather_*_amd64.deb
+sudo install -d -m 0755 /etc/apt/keyrings
+curl -fsSL https://falsecloud.github.io/aura/aura-archive-keyring.gpg \
+  | sudo tee /etc/apt/keyrings/aura.gpg >/dev/null
+echo "deb [signed-by=/etc/apt/keyrings/aura.gpg] https://falsecloud.github.io/aura stable main" \
+  | sudo tee /etc/apt/sources.list.d/aura.list
+sudo apt update
+sudo apt install aura-weather
 ```
 
 Then launch **Aura** from your application menu, or run:
 
 ```bash
 aura
+```
+
+The repository is also rebuilt for future GitHub releases. It is a signed
+third-party repository, not part of Debian's official archive; official Debian
+inclusion requires a Debian maintainer and archive review.
+
+#### Debian / Ubuntu (direct .deb)
+
+```bash
+sudo apt install ./aura-weather_*_amd64.deb
 ```
 
 #### Fedora / RHEL
@@ -124,6 +144,10 @@ sudo pacman -U aura-weather-*-1-x86_64.pkg.tar.zst
 The pacman package is built from the same self-contained bundle as the other
 release formats. It only needs a base Arch install with the usual desktop
 libraries; Python and Qt are bundled inside the package.
+
+The source-based AUR packaging is maintained in [`packaging/aur`](packaging/aur).
+It uses Arch's `pyside6` and Qt 6 packages and installs the application under
+`/opt/aura-weather`.
 
 #### Portable tarball
 

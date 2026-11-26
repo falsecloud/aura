@@ -17,6 +17,8 @@ release/
 packaging/build/
 packaging/arch/pkg/
 packaging/arch/src/
+packaging/aur/pkg/
+packaging/aur/src/
 *.AppImage
 *.deb
 *.rpm
@@ -38,3 +40,6 @@ packaging/arch/src/
 *.log
 core
 core.*
+
+# Local APT signing material
+.apt-key/
