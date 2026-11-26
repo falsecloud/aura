@@ -115,7 +115,8 @@ aura
 
 The repository is also rebuilt for future GitHub releases. It is a signed
 third-party repository, not part of Debian's official archive; official Debian
-inclusion requires a Debian maintainer and archive review.
+inclusion requires a Debian maintainer and archive review. The signing key
+fingerprint is `C31E 28C2 4B0B 0EC3 40BF F2F9 01E7 6A87 58F8 BE3A`.
 
 #### Debian / Ubuntu (direct .deb)
 

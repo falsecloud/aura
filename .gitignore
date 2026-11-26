@@ -43,3 +43,6 @@ core.*
 
 # Local APT signing material
 .apt-key/
+
+# Local AUR submission key
+.aur-key/
